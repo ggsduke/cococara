@@ -254,7 +254,7 @@ footer small{opacity:.8}
      <label><span>携帯番号<span class="req">必須</span></span><input id="tel" type="tel" autocomplete="tel" inputmode="tel" placeholder="090-1234-5678"></label>
      <label><span>最寄りの駅<span class="req">必須</span></span><input id="station" placeholder="例：三軒茶屋駅"></label>
     </div>
-    <label><span>メールアドレス<span class="req">必須</span></span><input id="email" type="email" autocomplete="email" inputmode="email" placeholder="hanako@example.com"><small style="font-weight:400;color:var(--sub)">受付完了のお知らせをお送りします</small></label>
+    <label><span>メールアドレス<span class="req">必須</span></span><input id="email" type="email" autocomplete="email" inputmode="email" placeholder="hanako@example.com"></label>
     <fieldset class="slot"><legend>ご希望日時 第一候補<span class="req">必須</span></legend>
      <div class="row2"><input type="date" id="d1" aria-label="第一候補の日付"><select id="t1" aria-label="第一候補の時間帯"></select></div>
     </fieldset>
@@ -336,21 +336,19 @@ function route(){
 }
 addEventListener("hashchange",route);
 
-const TO="yosukeo@icloud.com";
-const AUTO_APPLY="この度はペーパードライバー出張教習「ココカラ」にお申し込みいただき、誠にありがとうございます。\nお申し込み内容を確認のうえ、2営業日以内に担当よりお電話にてご連絡いたします。ご予約はそのお電話で確定となります。\n\nご不明な点がございましたら、このメールにご返信ください。\n\nペーパードライバー出張教習 ココカラ";
-const AUTO_CONTACT="この度は「ココカラ」へお問い合わせいただき、誠にありがとうございます。\n内容を確認のうえ、2営業日以内にメールにてご返信いたします。\n\nペーパードライバー出張教習 ココカラ";
+const W3F_KEY="a613ecc1-f0d4-42db-8e29-9890cf93d352";
 async function send(form,data,box,err,title,body,after){
  const btn=form.querySelector("button[type=submit]");btn.disabled=true;const label=btn.textContent;btn.textContent="送信中…";
  try{
-  const r=await fetch("https://formsubmit.co/ajax/"+TO,{method:"POST",headers:{"Content-Type":"application/json",Accept:"application/json"},body:JSON.stringify(data)});
+  const r=await fetch("https://api.web3forms.com/submit",{method:"POST",headers:{"Content-Type":"application/json",Accept:"application/json"},body:JSON.stringify(Object.assign({access_key:W3F_KEY,from_name:"ココカラ Webサイト"},data))});
   const j=await r.json().catch(()=>({}));
-  if(!r.ok||String(j.success)==="false")throw new Error(j.message||r.status);
+  if(!r.ok||j.success===false)throw new Error(j.message||r.status);
   box.className="done on";box.textContent="";
   const h=document.createElement("h3");h.textContent=title;const t=document.createElement("p");t.style.margin="8px 0 0";t.textContent=body;box.append(h,t);
   form.querySelectorAll("input:not([type=radio]),textarea").forEach(e=>e.value="");btn.textContent="送信しました";
   after&&after();box.scrollIntoView({block:"center"});
  }catch(e){
-  err.textContent="送信できませんでした。通信環境をご確認のうえ、もう一度お試しください。";btn.disabled=false;btn.textContent=label;
+  err.textContent="申し訳ありません、送信に失敗しました。時間をおいてもう一度お試しください。";btn.disabled=false;btn.textContent=label;
  }
 }
 const f=$("f");
@@ -398,14 +396,13 @@ f.addEventListener("submit",e=>{
  $("err").textContent=msg;
  if(msg)return;
  const fd={
-  _subject:"【ココカラ】お申し込み："+v("name")+" 様",_template:"table",_captcha:"false",
-  _autoresponse:AUTO_APPLY,
+  subject:"【ココカラ】お申し込み："+v("name")+" 様",replyto:v("email"),
   "お名前":v("name"),email:v("email"),"ご年齢":age+"歳","ご住所":v("addr"),"携帯番号":z2h(v("tel")),"最寄りの駅":v("station"),
   "プラン":p.name,"使う車":car?"レンタカー（別途7,000円/回）":"マイカー","マイカーの車種":car?"-":v("model"),
   "出張エリア":$("area").selectedOptions[0].textContent,
   "第一候補":fmt(v("d1"),$("t1").value),"第二候補":fmt(v("d2"),$("t2").value),
   "運転のブランク":$("gap").value,"練習したいこと":v("msg")||"-","目安料金":yen(tot)};
- send(f,fd,$("done"),$("err"),"お申し込みを受け付けました","ご入力のメールアドレスに確認メールをお送りしました。2営業日以内に担当よりお電話でご連絡します。",()=>{try{localStorage.removeItem(KEY)}catch(e){}});
+ send(f,fd,$("done"),$("err"),"お申し込みを受け付けました","ありがとうございます。内容を確認のうえ、2営業日以内に担当よりお電話でご連絡します。",()=>{try{localStorage.removeItem(KEY)}catch(e){}});
 });
 
 const cf=$("cf");
@@ -417,9 +414,9 @@ cf.addEventListener("submit",e=>{
  if(!$("cbody").value.trim())miss.push("お問い合わせ内容");
  $("cerr").textContent=miss.length?`${miss.join("・")}を正しく入力してください。`:"";
  if(miss.length)return;
- send(cf,{_subject:"【ココカラ】お問い合わせ："+$("cname").value.trim()+" 様",_template:"table",_captcha:"false",_autoresponse:AUTO_CONTACT,
+ send(cf,{subject:"【ココカラ】お問い合わせ："+$("cname").value.trim()+" 様",replyto:$("cmail").value.trim(),
   "お名前":$("cname").value.trim(),email:$("cmail").value.trim(),"お問い合わせ内容":$("cbody").value.trim()},
-  $("cdone"),$("cerr"),"お問い合わせを受け付けました","ご入力のメールアドレスに確認メールをお送りしました。2営業日以内にご返信します。");
+  $("cdone"),$("cerr"),"お問い合わせを受け付けました","ありがとうございます。2営業日以内に、ご入力のメールアドレスへご返信します。");
 });
 calc();route();
 }
