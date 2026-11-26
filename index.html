@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ココカラ｜ペーパードライバー出張教習</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;500;700;800&display=swap" rel="stylesheet">
+<style>
+/* VOICE: やさしく、安心させる。怖さをほどく先生の口調
+   IDEA: 自宅の前に笑顔の車がやってくる、街の道路地図
+   PICTURE: 家並みと道、ロゴの車が家の前に到着する場面
+   COLOUR and TYPE: ロゴのティール #63B0AA 主役、薄い若葉色の地、アクセントに信号の黄色 / M PLUS Rounded 1c
+   LAYOUT: ヘッダー→場面つきヒーロー→特徴→料金→流れ→予約フォーム（見積もり付き）→FAQ→フッター */
+:root{color-scheme:light dark;
+--bg:light-dark(#ffffff,#0f1b1a);--soft:light-dark(#eef7f6,#152624);--card:light-dark(#ffffff,#1a2e2c);
+--ink:light-dark(#1d2b2a,#e8f2f1);--sub:light-dark(#4d6260,#a9c1be);--line:light-dark(#d6e8e6,#2a4441);
+--brand:#63B0AA;--deep:light-dark(#2f7f79,#7cc7c1);--accent:#f5c242;--road:light-dark(#dfe7e6,#22302f)}
+:root[data-theme=light]{color-scheme:light}:root[data-theme=dark]{color-scheme:dark}
+*{box-sizing:border-box;min-width:0}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.75 "M PLUS Rounded 1c","Hiragino Maru Gothic ProN","Hiragino Sans",sans-serif;overflow-x:clip}
+html{scroll-padding-top:72px;scroll-behavior:smooth}
+a{color:var(--deep)}
+.band{padding:clamp(40px,6vw,88px) max(5vw,16px)}
+.wrap{max-width:1140px;margin:0 auto}
+h1,h2,h3{line-height:1.25;text-wrap:balance;margin:0}
+h2{font-size:clamp(26px,3.6vw,38px);font-weight:800;margin-bottom:10px}
+h3{font-size:19px;font-weight:700}
+.lead{color:var(--sub);max-width:640px;margin:0 0 32px}
+/* header */
+header{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--bg) 90%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.hd{display:flex;align-items:center;gap:16px;max-width:1140px;margin:0 auto;padding:8px max(5vw,16px)}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--ink);font-weight:800;font-size:22px}
+.brand svg{width:52px;height:44px}
+nav{display:flex;gap:4px;margin-left:auto;flex-wrap:wrap}
+nav a{text-decoration:none;color:var(--ink);font-size:15px;padding:10px 12px;border-radius:10px}
+nav a:hover{background:var(--soft)}
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:0 26px;border-radius:999px;border:0;background:var(--brand);color:#fff;font:inherit;font-weight:700;text-decoration:none;cursor:pointer;box-shadow:0 4px 0 #3f8d87}
+.btn:hover{filter:brightness(1.05)}.btn:active{transform:translateY(2px);box-shadow:0 2px 0 #3f8d87}
+.btn.ghost{background:transparent;color:var(--deep);box-shadow:inset 0 0 0 2px var(--brand)}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+/* hero */
+.hero{background:var(--soft);padding-bottom:0}
+.hgrid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);gap:32px;align-items:center}
+.hero h1{font-size:clamp(34px,5vw,54px);font-weight:800}
+.hero h1 span{display:block;font-size:.5em;font-weight:500;color:var(--sub);margin-bottom:8px}
+.hero p{font-size:17px;color:var(--sub);margin:18px 0 26px}
+.cta{display:flex;gap:12px;flex-wrap:wrap}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin-top:22px;padding:0;list-style:none}
+.chips li{background:var(--card);border:1px solid var(--line);border-radius:999px;padding:4px 14px;font-size:14px}
+.scene{width:100%;height:auto;display:block}
+.car{animation:arrive 2.4s cubic-bezier(.2,.8,.2,1) both}
+@keyframes arrive{from{transform:translateX(-260px)}to{transform:none}}
+@media(prefers-reduced-motion:reduce){.car{animation:none}html{scroll-behavior:auto}}
+/* features */
+.feat{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));gap:20px}
+.fc{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:24px}
+.fc svg{width:56px;height:56px;margin-bottom:10px}
+.fc p{margin:8px 0 0;color:var(--sub);font-size:15px}
+/* plans */
+.plans{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,250px),1fr));gap:20px}
+.pl{background:var(--card);border:2px solid var(--line);border-radius:22px;padding:26px;display:flex;flex-direction:column}
+.pl.pop{border-color:var(--brand);position:relative}
+.pl.pop::before{content:"いちばん人気";position:absolute;top:-14px;left:22px;background:var(--accent);color:#3a2b00;font-size:13px;font-weight:700;padding:2px 12px;border-radius:999px}
+.price{font-size:clamp(30px,4vw,40px);font-weight:800;color:var(--deep);white-space:nowrap;margin:8px 0 0}
+.price small{font-size:15px;color:var(--sub);font-weight:500}
+.pl ul{padding-left:1.2em;margin:14px 0 20px;color:var(--sub);font-size:15px;flex:1}
+.crumb{font-size:14px;color:var(--sub);margin:0 0 12px}.hint{margin:-6px 0 0;font-size:14px;color:var(--sub)}
+.slot legend .req{margin-left:6px}
+[hidden]{display:none!important}
+.note{font-size:13px;color:var(--sub);margin-top:18px}
+/* flow */
+.flow{list-style:none;padding:0;margin:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,200px),1fr));gap:16px;counter-reset:s}
+.flow li{counter-increment:s;background:var(--card);border-radius:18px;padding:22px;border:1px solid var(--line)}
+.flow li::before{content:counter(s);display:grid;place-items:center;width:40px;height:40px;border-radius:50%;background:var(--brand);color:#fff;font-weight:800;margin-bottom:10px}
+.flow p{margin:6px 0 0;font-size:15px;color:var(--sub)}
+/* booking */
+.book{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:28px;align-items:start}
+form{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:clamp(20px,3vw,32px);display:grid;gap:18px}
+.row2{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:14px}
+label{display:grid;gap:6px;font-weight:700;font-size:15px}
+.req{color:#d0573c;font-size:13px;margin-left:4px;white-space:nowrap}
+input,select,textarea{font:inherit;font-size:16px;min-height:48px;padding:10px 14px;border-radius:12px;border:1.5px solid var(--line);background:var(--bg);color:var(--ink);width:100%}
+textarea{min-height:96px;resize:vertical}
+fieldset{border:0;padding:0;margin:0;display:grid;gap:8px}
+legend{font-weight:700;font-size:15px;margin-bottom:6px}
+.seg{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,130px),1fr));gap:8px}
+.seg label{font-weight:500;display:flex;align-items:center;gap:8px;min-height:48px;padding:8px 12px;border:1.5px solid var(--line);border-radius:12px;cursor:pointer}
+.seg input{flex:none;width:20px;height:20px;min-height:0;accent-color:var(--brand)}
+.seg label:has(input:checked){border-color:var(--brand);background:var(--soft)}
+.err{color:#d0573c;font-size:14px;min-height:1em;margin:0}
+.est{position:sticky;top:84px;background:var(--brand);color:#fff;border-radius:22px;padding:26px}
+.est h3{font-size:17px;font-weight:700;opacity:.9}
+.total{font-size:clamp(38px,5vw,52px);font-weight:800;line-height:1.1;margin:8px 0 4px;white-space:nowrap}
+.est dl{display:grid;grid-template-columns:1fr auto;gap:6px 12px;margin:18px 0 0;font-size:15px}
+.est dd{margin:0;text-align:right;white-space:nowrap}
+.est dt{opacity:.9}
+.done{display:none;background:var(--soft);border:2px solid var(--brand);border-radius:18px;padding:20px}
+.done.on{display:block}
+/* faq */
+details{background:var(--card);border:1px solid var(--line);border-radius:16px;margin-bottom:12px}
+summary{cursor:pointer;padding:18px 22px;font-weight:700;list-style:none;display:flex;gap:10px}
+summary::before{content:"Q";color:var(--brand);font-weight:800}
+details p{margin:0;padding:0 22px 20px 50px;color:var(--sub)}
+/* footer */
+footer{background:#2f6f6a;color:#e8f5f3}
+footer .wrap{display:flex;gap:28px;flex-wrap:wrap;align-items:center;justify-content:space-between}
+footer .brand{color:#fff}
+footer small{opacity:.8}
+.sticky-cta{display:none}
+@media(max-width:860px){.hgrid,.book{grid-template-columns:minmax(0,1fr)}.est{position:static}nav a:not(.keep){display:none}}
+@media(max-width:600px){.row2,.seg{grid-template-columns:minmax(0,1fr)}
+.sticky-cta{display:flex;position:fixed;left:12px;right:12px;bottom:12px;z-index:30}
+.sticky-cta .btn{flex:1}footer{padding-bottom:96px}.hd .btn{display:none}}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+ <defs>
+  <symbol id="logo" viewBox="140 280 810 620">
+   <g fill="#63B0AA">
+    <circle cx="376" cy="800" r="90"/><circle cx="708" cy="800" r="90"/>
+   </g>
+   <path d="M205 548 L350 323 L734 323 L879 548" fill="none" stroke="#63B0AA" stroke-width="60" stroke-linejoin="round"/>
+   <path d="M374 353 H710 L800 485 H284Z" fill="#fff"/>
+   <text x="542" y="447" text-anchor="middle" textLength="360" lengthAdjust="spacingAndGlyphs" font-family="'M PLUS Rounded 1c',sans-serif" font-weight="800" font-size="76" fill="#63B0AA">COCOCARA</text>
+   <rect x="176.5" y="496.5" width="731" height="295" rx="147.5" fill="#fff" stroke="#63B0AA" stroke-width="59"/>
+   <g fill="#63B0AA">
+    <circle cx="309" cy="644" r="42"/><circle cx="775" cy="644" r="42"/>
+    <path d="M418 628 Q542 674 666 628 Q620 698 542 698 Q464 698 418 628Z" stroke="#63B0AA" stroke-width="8" stroke-linejoin="round"/>
+   </g>
+  </symbol>
+ </defs>
+</svg>
+
+<header>
+ <div class="hd">
+  <a class="brand" href="#top" aria-label="ココカラ トップへ"><svg role="img" aria-label="COCOCARAロゴ"><use href="#logo"/></svg>ココカラ</a>
+  <nav aria-label="メニュー">
+   <a href="#features">特徴</a><a href="#plans">料金</a><a href="#flow">ご利用の流れ</a><a href="#faq">よくある質問</a><a class="keep" href="#contact">お問い合わせ</a>
+  </nav>
+  <a class="btn" href="#apply">お申し込み</a>
+ </div>
+</header>
+
+<main id="top">
+<div data-view="home">
+<section class="band hero">
+ <div class="wrap hgrid">
+  <div>
+   <h1><span>ペーパードライバー出張教習</span>運転を、<br>ここから、もう一度。</h1>
+   <p>インストラクターがご自宅まで伺います。いつもの道、通勤路、スーパーの駐車場。あなたが実際に走る場所で、少しずつ自信を取り戻しましょう。</p>
+   <div class="cta"><a class="btn" href="#apply">教習を申し込む</a><a class="btn ghost" href="#plans">料金を見る</a></div>
+   <ul class="chips"><li>マイカーで練習OK</li><li>レンタカー手配もOK</li><li>1回2時間から</li></ul>
+  </div>
+  <svg class="scene" viewBox="0 0 640 420" role="img" aria-label="ココカラの車が家の前に到着するイラスト">
+   <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#cfeeea"/><stop offset="1" stop-color="#eef7f6"/></linearGradient>
+    <linearGradient id="hill" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#9fd3cd"/><stop offset="1" stop-color="#7fc1ba"/></linearGradient>
+   </defs>
+   <rect width="640" height="420" rx="28" fill="url(#sky)"/>
+   <circle cx="540" cy="80" r="38" fill="#f5c242" opacity=".9"/>
+   <path d="M0 250 Q120 190 250 232 T640 210 V420 H0Z" fill="url(#hill)"/>
+   <g>
+    <rect x="70" y="170" width="120" height="100" fill="#fff"/><path d="M58 175 L130 118 L202 175Z" fill="#2f7f79"/>
+    <rect x="115" y="215" width="30" height="55" rx="4" fill="#f5c242"/><rect x="85" y="190" width="24" height="22" rx="3" fill="#cfeeea"/><rect x="152" y="190" width="24" height="22" rx="3" fill="#cfeeea"/>
+    <rect x="410" y="150" width="140" height="120" fill="#fff"/><path d="M396 156 L480 92 L564 156Z" fill="#e48a6e"/>
+    <rect x="465" y="210" width="32" height="60" rx="4" fill="#63B0AA"/><rect x="425" y="175" width="28" height="26" rx="3" fill="#cfeeea"/><rect x="510" y="175" width="28" height="26" rx="3" fill="#cfeeea"/>
+    <circle cx="240" cy="236" r="26" fill="#5aa79f"/><rect x="236" y="250" width="8" height="22" fill="#6b5240"/>
+    <circle cx="600" cy="236" r="22" fill="#5aa79f"/><rect x="596" y="248" width="8" height="22" fill="#6b5240"/>
+   </g>
+   <rect x="0" y="270" width="640" height="150" fill="#5c6b6a"/>
+   <rect x="0" y="270" width="640" height="10" fill="#c9d6d4"/>
+   <g fill="#fff" opacity=".85"><rect x="20" y="352" width="60" height="8" rx="4"/><rect x="140" y="352" width="60" height="8" rx="4"/><rect x="260" y="352" width="60" height="8" rx="4"/><rect x="380" y="352" width="60" height="8" rx="4"/><rect x="500" y="352" width="60" height="8" rx="4"/><rect x="620" y="352" width="60" height="8" rx="4"/></g>
+   <ellipse cx="410" cy="342" rx="120" ry="12" fill="#000" opacity=".22"/>
+   <g class="car"><use href="#logo" x="290" y="196" width="240" height="184"/></g>
+  </svg>
+ </div>
+</section>
+
+<section class="band" id="features">
+ <div class="wrap">
+  <h2>ココカラが選ばれる理由</h2>
+  <p class="lead">教習所に通う時間がない方、久しぶりの運転が怖い方へ。生活に合わせた、やさしい練習をご用意しています。</p>
+  <div class="feat">
+   <div class="fc"><svg viewBox="0 0 56 56"><circle cx="28" cy="28" r="28" fill="var(--soft)"/><path d="M14 30 L28 17 L42 30 V42 H14Z" fill="#63B0AA"/><rect x="24" y="32" width="8" height="10" fill="#fff"/></svg><h3>ご自宅まで出張</h3><p>集合場所はご自宅や最寄り駅。送迎も教習所までの移動もいりません。</p></div>
+   <div class="fc"><svg viewBox="0 0 56 56"><circle cx="28" cy="28" r="28" fill="var(--soft)"/><rect x="12" y="24" width="32" height="14" rx="7" fill="#63B0AA"/><path d="M18 24 L22 16 H34 L38 24" fill="none" stroke="#63B0AA" stroke-width="4"/><circle cx="20" cy="40" r="4" fill="#2f7f79"/><circle cx="36" cy="40" r="4" fill="#2f7f79"/></svg><h3>マイカーでもレンタカーでも</h3><p>ご自分の車で車幅感覚や駐車のクセをつかめます。お車がない方はレンタカーを手配します。</p></div>
+   <div class="fc"><svg viewBox="0 0 56 56"><circle cx="28" cy="28" r="28" fill="var(--soft)"/><path d="M12 40 Q20 18 28 28 T44 16" fill="none" stroke="#63B0AA" stroke-width="5" stroke-linecap="round"/><circle cx="44" cy="16" r="5" fill="#f5c242"/></svg><h3>実際の道でオーダーメイド</h3><p>通勤ルート、子どもの送迎、買い物先の駐車場。走りたい道で練習します。</p></div>
+   <div class="fc"><svg viewBox="0 0 56 56"><circle cx="28" cy="28" r="28" fill="var(--soft)"/><circle cx="28" cy="22" r="8" fill="#63B0AA"/><path d="M14 44 Q28 26 42 44Z" fill="#63B0AA"/></svg><h3>インストラクター指名OK</h3><p>女性インストラクターのご希望も承ります。同じ先生で続けて受講できます。</p></div>
+  </div>
+ </div>
+</section>
+
+<section class="band" id="plans" style="background:var(--soft)">
+ <div class="wrap">
+  <h2>料金プラン</h2>
+  <p class="lead">1回あたり2時間。回数が多いほどお得になります。すべて税込です。</p>
+  <div class="plans" id="planList"></div>
+  <p class="note">※ 掲載の料金・サービス内容はサンプルです。出張料は対応エリアにより異なります。</p>
+ </div>
+</section>
+
+<section class="band" id="flow">
+ <div class="wrap">
+  <h2>ご利用の流れ</h2>
+  <p class="lead">お申し込みから当日まで、むずかしい手続きはありません。</p>
+  <ol class="flow">
+   <li><h3>Webで申し込み</h3><p>お申し込みページから希望日時とプランを送信。</p></li>
+   <li><h3>お電話で確認</h3><p>運転歴や不安なことを、担当がやさしくヒアリング。</p></li>
+   <li><h3>当日はご自宅で</h3><p>インストラクターが伺い、車の点検から始めます。</p></li>
+   <li><h3>ひとりで運転へ</h3><p>毎回の振り返りシートで、上達がひと目でわかります。</p></li>
+  </ol>
+ </div>
+</section>
+
+<section class="band" id="faq">
+ <div class="wrap" style="max-width:820px">
+  <h2>よくある質問</h2>
+  <p class="lead">ほかにも気になることがあれば、<a href="#contact">お問い合わせページ</a>からお気軽にどうぞ。</p>
+  <div id="faqList"></div>
+ </div>
+</section>
+</div>
+<section class="band" data-view="apply" id="apply-top" hidden>
+ <div class="wrap">
+  <p class="crumb"><a href="#top">ホーム</a> › お申し込み</p>
+  <h2>お申し込み</h2>
+  <p class="lead">必要事項をご入力ください。内容を確認のうえ、担当よりお電話でご連絡します。予約はそのお電話で確定となります。</p>
+  <div class="book">
+   <form id="f" novalidate>
+    <fieldset><legend>プラン</legend><div class="seg" id="planSeg"></div></fieldset>
+    <fieldset><legend>練習に使う車</legend>
+     <div class="seg">
+      <label><input type="radio" name="car" value="0" checked>マイカー</label>
+      <label><input type="radio" name="car" value="7000">レンタカー（別途7,000円/回）</label>
+     </div>
+    </fieldset>
+    <label id="modelBox"><span>マイカーの車種<span class="req">必須</span></span><input id="model" placeholder="例：トヨタ アクア（白）"></label>
+    <p class="hint" id="rentHint" hidden>レンタカーはココカラで手配し、当日ご自宅までお持ちします。</p>
+    <label>出張エリア
+     <select id="area">
+      <option value="0">東京23区（出張料無料）</option>
+      <option value="1100">東京都下・川崎市（+1,100円/回）</option>
+      <option value="2200">横浜市・さいたま市・千葉市（+2,200円/回）</option>
+     </select>
+    </label>
+    <div class="row2">
+     <label><span>お名前<span class="req">必須</span></span><input id="name" autocomplete="name" placeholder="山田 花子"></label>
+     <label><span>ご年齢<span class="req">必須</span></span><input id="age" type="number" inputmode="numeric" min="16" max="99" placeholder="例：35"></label>
+    </div>
+    <label><span>ご住所<span class="req">必須</span></span><input id="addr" autocomplete="street-address" placeholder="東京都世田谷区〇〇1-2-3"></label>
+    <div class="row2">
+     <label><span>携帯番号<span class="req">必須</span></span><input id="tel" type="tel" autocomplete="tel" inputmode="tel" placeholder="090-1234-5678"></label>
+     <label><span>最寄りの駅<span class="req">必須</span></span><input id="station" placeholder="例：三軒茶屋駅"></label>
+    </div>
+    <label><span>メールアドレス<span class="req">必須</span></span><input id="email" type="email" autocomplete="email" inputmode="email" placeholder="hanako@example.com"><small style="font-weight:400;color:var(--sub)">受付完了のお知らせをお送りします</small></label>
+    <fieldset class="slot"><legend>ご希望日時 第一候補<span class="req">必須</span></legend>
+     <div class="row2"><input type="date" id="d1" aria-label="第一候補の日付"><select id="t1" aria-label="第一候補の時間帯"></select></div>
+    </fieldset>
+    <fieldset class="slot"><legend>ご希望日時 第二候補<span class="req">必須</span></legend>
+     <div class="row2"><input type="date" id="d2" aria-label="第二候補の日付"><select id="t2" aria-label="第二候補の時間帯"></select></div>
+    </fieldset>
+    <label>運転のブランク
+     <select id="gap"><option>1年未満</option><option>1〜5年</option><option selected>5〜10年</option><option>10年以上</option><option>免許取得後ほぼ運転なし</option></select>
+    </label>
+    <label>練習したいこと・不安なこと<textarea id="msg" placeholder="例：子どもの保育園送迎、駐車がとにかく苦手"></textarea></label>
+    <p class="err" id="err" role="alert"></p>
+    <button class="btn" type="submit">この内容で申し込む</button>
+    <div class="done" id="done" role="status"></div>
+   </form>
+   <aside class="est" aria-live="polite">
+    <h3>お見積もり（目安）</h3>
+    <div class="total" id="total">¥0</div>
+    <div id="per" style="opacity:.9;font-size:15px"></div>
+    <dl id="break"></dl>
+   </aside>
+  </div>
+ </div>
+</section>
+
+<section class="band" data-view="contact" hidden>
+ <div class="wrap" style="max-width:720px">
+  <p class="crumb"><a href="#top">ホーム</a> › お問い合わせ</p>
+  <h2>お問い合わせ</h2>
+  <p class="lead">ご不明な点やご相談など、お気軽にどうぞ。2営業日以内にメールでお返事します。</p>
+  <form id="cf" novalidate>
+   <label><span>お名前<span class="req">必須</span></span><input id="cname" autocomplete="name" placeholder="山田 花子"></label>
+   <label><span>メールアドレス<span class="req">必須</span></span><input id="cmail" type="email" autocomplete="email" inputmode="email" placeholder="hanako@example.com"></label>
+   <label><span>お問い合わせ内容<span class="req">必須</span></span><textarea id="cbody" style="min-height:180px" placeholder="例：週末だけの受講は可能ですか？"></textarea></label>
+   <p class="err" id="cerr" role="alert"></p>
+   <button class="btn" type="submit">送信する</button>
+   <div class="done" id="cdone" role="status"></div>
+  </form>
+ </div>
+</section>
+</main>
+
+<footer class="band">
+ <div class="wrap">
+  <a class="brand" href="#top"><svg role="img" aria-label="COCOCARAロゴ" style="background:#fff;border-radius:12px;padding:4px;width:60px;height:50px"><use href="#logo"/></svg>ココカラ</a>
+  <div><small>ペーパードライバー出張教習 ココカラ<br>受付 9:00〜20:00（年末年始を除く）</small><br><a href="#apply" style="color:#fff">お申し込み</a>　<a href="#contact" style="color:#fff">お問い合わせ</a></div>
+  <small>© 2026 COCOCARA</small>
+ </div>
+</footer>
+<div class="sticky-cta"><a class="btn" href="#apply">お申し込みはこちら</a></div>
+
+<script>
+{
+const plans=[
+ {id:"t",name:"おためし1回",n:1,price:19800,pts:["2時間×1回","運転チェックとアドバイス","まずは雰囲気を知りたい方に"]},
+ {id:"s",name:"安心3回パック",n:3,price:55800,pop:true,pts:["2時間×3回","基本操作から駐車・車線変更まで","いつもの道を一人で走れる目標"]},
+ {id:"m",name:"しっかり5回パック",n:5,price:88000,pts:["2時間×5回","高速道路・合流の練習も","長いブランクがある方に"]}
+];
+const faqs=[
+ ["10年以上運転していなくても大丈夫ですか？","はい。シートの合わせ方やミラーの調整から、ゆっくり始めます。広い場所での練習から入るので安心してください。"],
+ ["マイカーに補助ブレーキがなくても受講できますか？","受講できます。最初は交通量の少ない場所で操作に慣れていただき、安全を確認しながら道路に出ます。運転に不安が大きい方は、まず広い場所での練習から始めます。"],
+ ["車を持っていなくても受講できますか？","はい。レンタカーをこちらで手配し、当日ご自宅までお持ちします。レンタカー代として1回あたり別途7,000円を頂戴します。"],
+ ["キャンセル料はかかりますか？","前日17時までのご連絡は無料です。それ以降は1回分の50%を頂戴します（サンプル規定）。"],
+ ["雨の日はどうなりますか？","小雨なら実施します。雨の日の運転に慣れる良い機会です。荒天時は日程を変更します。"]
+];
+const yen=v=>"¥"+v.toLocaleString("ja-JP");
+const $=id=>document.getElementById(id);
+$("planList").innerHTML=plans.map(p=>`<div class="pl${p.pop?" pop":""}"><h3>${p.name}</h3><p class="price">${yen(p.price)}<small> / ${p.n}回</small></p><ul>${p.pts.map(t=>`<li>${t}</li>`).join("")}</ul><a class="btn${p.pop?"":" ghost"}" href="#apply" data-plan="${p.id}">このプランで申し込む</a></div>`).join("");
+$("planSeg").innerHTML=plans.map(p=>`<label><input type="radio" name="plan" value="${p.id}"${p.pop?" checked":""}>${p.name}</label>`).join("");
+$("faqList").innerHTML=faqs.map(([q,a])=>`<details><summary>${q}</summary><p>${a}</p></details>`).join("");
+const slots=["午前（9:00〜12:00）","午後（13:00〜17:00）","夕方（17:00〜20:00）"];
+["t1","t2"].forEach(id=>$(id).innerHTML=slots.map(t=>`<option>${t}</option>`).join(""));
+
+function route(){
+ const h=location.hash.slice(1);
+ const v=h==="apply"||h==="contact"?h:"home";
+ document.querySelectorAll("[data-view]").forEach(e=>e.hidden=e.dataset.view!==v);
+ if(v!=="home"||!h||h==="top")window.scrollTo(0,0);
+ else{const t=document.getElementById(h);if(t)t.scrollIntoView()}
+}
+addEventListener("hashchange",route);
+
+const TO="yosukeo@icloud.com";
+const AUTO_APPLY="この度はペーパードライバー出張教習「ココカラ」にお申し込みいただき、誠にありがとうございます。\nお申し込み内容を確認のうえ、2営業日以内に担当よりお電話にてご連絡いたします。ご予約はそのお電話で確定となります。\n\nご不明な点がございましたら、このメールにご返信ください。\n\nペーパードライバー出張教習 ココカラ";
+const AUTO_CONTACT="この度は「ココカラ」へお問い合わせいただき、誠にありがとうございます。\n内容を確認のうえ、2営業日以内にメールにてご返信いたします。\n\nペーパードライバー出張教習 ココカラ";
+async function send(form,data,box,err,title,body,after){
+ const btn=form.querySelector("button[type=submit]");btn.disabled=true;const label=btn.textContent;btn.textContent="送信中…";
+ try{
+  const r=await fetch("https://formsubmit.co/ajax/"+TO,{method:"POST",headers:{"Content-Type":"application/json",Accept:"application/json"},body:JSON.stringify(data)});
+  const j=await r.json().catch(()=>({}));
+  if(!r.ok||String(j.success)==="false")throw new Error(j.message||r.status);
+  box.className="done on";box.textContent="";
+  const h=document.createElement("h3");h.textContent=title;const t=document.createElement("p");t.style.margin="8px 0 0";t.textContent=body;box.append(h,t);
+  form.querySelectorAll("input:not([type=radio]),textarea").forEach(e=>e.value="");btn.textContent="送信しました";
+  after&&after();box.scrollIntoView({block:"center"});
+ }catch(e){
+  err.textContent="送信できませんでした。通信環境をご確認のうえ、もう一度お試しください。";btn.disabled=false;btn.textContent=label;
+ }
+}
+const f=$("f");
+const d=new Date();d.setDate(d.getDate()+3);
+const minD=d.toISOString().slice(0,10);$("d1").min=minD;$("d2").min=minD;
+const z2h=v=>v.replace(/[０-９]/g,c=>String.fromCharCode(c.charCodeAt(0)-65248)).replace(/[－ー‐]/g,"-");
+
+function calc(){
+ const p=plans.find(x=>x.id===f.plan.value)||plans[1];
+ const car=+f.car.value,area=+$("area").value;
+ $("modelBox").hidden=!!car;$("rentHint").hidden=!car;
+ const tot=p.price+(car+area)*p.n;
+ $("total").textContent=yen(tot);
+ $("per").textContent=`1回あたり ${yen(Math.round(tot/p.n))}（${p.n}回・計${p.n*2}時間）`;
+ const rows=[[p.name,p.price]];
+ if(car)rows.push([`レンタカー 7,000円×${p.n}回`,car*p.n]);
+ rows.push([area?`出張料 ×${p.n}回`:"出張料",area*p.n]);
+ $("break").innerHTML=rows.map(([k,v])=>`<dt>${k}</dt><dd>${v?yen(v):"無料"}</dd>`).join("");
+ return {p,tot,car};
+}
+const KEY="cococara-draft2";
+const fields=["model","area","name","age","addr","tel","station","email","d1","t1","d2","t2","gap","msg"];
+function save(){try{const o={plan:f.plan.value,car:f.car.value};fields.forEach(k=>o[k]=$(k).value);localStorage.setItem(KEY,JSON.stringify(o))}catch(e){}}
+try{const o=JSON.parse(localStorage.getItem(KEY)||"null");if(o){fields.forEach(k=>{if(o[k]!=null)$(k).value=o[k]});f.plan.value=o.plan||"s";f.car.value=o.car||"0"}}catch(e){}
+
+f.addEventListener("input",()=>{calc();save()});
+f.addEventListener("change",()=>{calc();save()});
+document.addEventListener("click",e=>{const a=e.target.closest("[data-plan]");if(a){f.plan.value=a.dataset.plan;calc();save()}});
+const fmt=(dv,tv)=>new Date(dv+"T00:00").toLocaleDateString("ja-JP",{month:"long",day:"numeric",weekday:"short"})+" "+tv;
+f.addEventListener("submit",e=>{
+ e.preventDefault();
+ const {p,tot,car}=calc();
+ const miss=[],v=id=>$(id).value.trim();
+ if(!car&&!v("model"))miss.push("マイカーの車種");
+ if(!v("name"))miss.push("お名前");
+ const age=+z2h(v("age"));if(!(age>=16&&age<=99))miss.push("ご年齢");
+ if(!v("addr"))miss.push("ご住所");
+ if(!/^0[5789]0-?\d{4}-?\d{4}$/.test(z2h(v("tel")).replace(/\s/g,"")))miss.push("携帯番号（090・080・070など）");
+ if(!v("station"))miss.push("最寄りの駅");
+ if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v("email")))miss.push("メールアドレス");
+ if(!v("d1"))miss.push("第一候補の日付");
+ if(!v("d2"))miss.push("第二候補の日付");
+ let msg=miss.length?`${miss.join("・")}を入力してください。`:"";
+ if(!msg&&v("d1")===v("d2")&&$("t1").value===$("t2").value)msg="第一候補と第二候補は別の日時をお選びください。";
+ $("err").textContent=msg;
+ if(msg)return;
+ const fd={
+  _subject:"【ココカラ】お申し込み："+v("name")+" 様",_template:"table",_captcha:"false",
+  _autoresponse:AUTO_APPLY,
+  "お名前":v("name"),email:v("email"),"ご年齢":age+"歳","ご住所":v("addr"),"携帯番号":z2h(v("tel")),"最寄りの駅":v("station"),
+  "プラン":p.name,"使う車":car?"レンタカー（別途7,000円/回）":"マイカー","マイカーの車種":car?"-":v("model"),
+  "出張エリア":$("area").selectedOptions[0].textContent,
+  "第一候補":fmt(v("d1"),$("t1").value),"第二候補":fmt(v("d2"),$("t2").value),
+  "運転のブランク":$("gap").value,"練習したいこと":v("msg")||"-","目安料金":yen(tot)};
+ send(f,fd,$("done"),$("err"),"お申し込みを受け付けました","ご入力のメールアドレスに確認メールをお送りしました。2営業日以内に担当よりお電話でご連絡します。",()=>{try{localStorage.removeItem(KEY)}catch(e){}});
+});
+
+const cf=$("cf");
+cf.addEventListener("submit",e=>{
+ e.preventDefault();
+ const miss=[];
+ if(!$("cname").value.trim())miss.push("お名前");
+ if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test($("cmail").value.trim()))miss.push("メールアドレス");
+ if(!$("cbody").value.trim())miss.push("お問い合わせ内容");
+ $("cerr").textContent=miss.length?`${miss.join("・")}を正しく入力してください。`:"";
+ if(miss.length)return;
+ send(cf,{_subject:"【ココカラ】お問い合わせ："+$("cname").value.trim()+" 様",_template:"table",_captcha:"false",_autoresponse:AUTO_CONTACT,
+  "お名前":$("cname").value.trim(),email:$("cmail").value.trim(),"お問い合わせ内容":$("cbody").value.trim()},
+  $("cdone"),$("cerr"),"お問い合わせを受け付けました","ご入力のメールアドレスに確認メールをお送りしました。2営業日以内にご返信します。");
+});
+calc();route();
+}
+</script>
+</body>
+</html>
